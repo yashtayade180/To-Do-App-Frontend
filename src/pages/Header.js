@@ -8,17 +8,20 @@ const Header = () => {
   const navigate = useNavigate();
   return (
     <Box
-      height="50px"
-      backgroundColor="#03c6fc"
+      height="70px"
+      backgroundColor="#020d47"
       padding="0 20px"
       display="flex"
       alignItems="center"
       justifyContent="space-between"
     >
-      <Box fontSize="20px" color="#fff" fontWeight="bold">
-        <Link to="/task/create" style={{ textDecoration: "none" }}>
-          Task up
-        </Link>
+      <Box
+        fontSize="20px"
+        color="#fff"
+        fontWeight="bold"
+        style={{ textDecoration: "none" }}
+      >
+        TO DO Application
       </Box>
       <Box display="flex" alignItems="center" gap="10px">
         <img
@@ -31,6 +34,7 @@ const Header = () => {
         <Select
           sx={{
             boxShadow: "none",
+            color: "white",
             ".MuiOutlinedInput-notchedOutline": { border: 0 },
           }}
           value={user.name}

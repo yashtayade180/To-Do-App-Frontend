@@ -64,28 +64,38 @@ const TaskForm = ({ mode = "edit", task }) => {
   const [date, setDate] = useState(null);
   const [time, setTime] = useState(null);
   return (
-    <Formik
-      onSubmit={handleFormSubmit}
-      initialValues={mode === "create" ? initialValues : task}
-      validationSchema={
-        mode === "create" ? initialCreateSchema : initialEditSchema
-      }
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      p={4}
+      boxShadow="0px 3px 6px rgba(0, 0, 0, 0.15)"
+      borderRadius={8}
+      bgcolor="#f8f8f8"
+      maxWidth={isNotMobile ? "50%" : "90%"}
+      margin="2rem auto"
     >
-      {({
-        handleSubmit,
-        handleBlur,
-        touched,
-        resetForm,
-        values,
-        handleChange,
-        errors,
-      }) => (
-        <Box p="2rem 0" m="2rem auto" width={isNotMobile ? "50%" : "90%"}>
-          <Typography textAlign="center" mb="2rem">
-            Create a task
-          </Typography>
-          <form onSubmit={handleSubmit}>
-            <Box display="flex" flexDirection="column" gap="30px">
+      <Typography variant="h5" align="center" mb={2}>
+        {mode === "edit" ? "Edit Task" : "Create a Task"}
+      </Typography>
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={mode === "create" ? initialValues : task}
+        validationSchema={
+          mode === "create" ? initialCreateSchema : initialEditSchema
+        }
+      >
+        {({
+          handleSubmit,
+          handleBlur,
+          touched,
+          resetForm,
+          values,
+          handleChange,
+          errors,
+        }) => (
+          <form onSubmit={handleSubmit} style={{ width: "100%" }}>
+            <Box display="flex" flexDirection="column" gap={2}>
               <TextField
                 label="Task name"
                 value={values.name}
@@ -169,30 +179,45 @@ const TaskForm = ({ mode = "edit", task }) => {
                 </FormControl>
               )}
               <Button
-                variant="outlined"
+                variant="contained"
+                size="large"
                 type="submit"
-                m="2rem 0"
-                p="1rem 0"
-                background="#00D5FA"
+                borderRadius="55px"
+                fullWidth
+                sx={{
+                  borderRadius: "55px",
+                  backgroundColor: "#0b3047",
+                  "&:hover": {
+                    backgroundColor: "#16679a",
+                  },
+                }}
               >
                 {mode === "edit" ? "Edit Task" : "Create Task"}
               </Button>
               {mode === "edit" && (
                 <Button
-                  variant="outlined"
+                  variant="contained"
                   onClick={handleDeleteTask}
-                  m="2rem 0"
-                  p="1rem 0"
-                  background="#FF0000" // Customize the button's background color
+                  size="large"
+                  fullWidth
+                  sx={{
+                    borderRadius: "55px",
+                    color: "white",
+                    marginTop: "0.35rem",
+                    backgroundColor: "#cb2d01",
+                    "&:hover": {
+                      backgroundColor: "#f53803",
+                    },
+                  }}
                 >
                   Delete Task
                 </Button>
               )}
             </Box>
           </form>
-        </Box>
-      )}
-    </Formik>
+        )}
+      </Formik>
+    </Box>
   );
 };
 

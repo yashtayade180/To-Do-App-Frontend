@@ -26,6 +26,21 @@ const Home = () => {
     { label: "Last seven", value: "seven" },
     { label: "Last Thirty", value: "thirty" },
   ];
+
+  const addTaskLinkStyle = {
+    height: "100%", // Set the height to take the whole height of the parent
+    fontSize: "20px",
+    color: "#fff",
+    fontWeight: "bold",
+    textDecoration: "none",
+    backgroundColor: "#030a0b",
+    boxShadow: "0px 3px 6px rgba(0, 0, 0, 0.15)",
+    borderRadius: "55px",
+    padding: "10px 20px", // Adjust padding to fit the content
+    display: "inline-flex", // Display the Link as an inline-flex element
+    alignItems: "center", // Center the content vertically
+  };
+
   useEffect(() => {
     axios.get(`/task?type=${typeFilter}&day=${dayFilter}`).then((res) => {
       dispatch(setTasks(res.data.tasks));
@@ -34,7 +49,7 @@ const Home = () => {
   const { tasks } = useSelector((state) => state.task);
 
   const handleTypeChange = (e) => {
-    setTypeFilter(e.target.value)
+    setTypeFilter(e.target.value);
   };
   return (
     <Box>
@@ -51,12 +66,21 @@ const Home = () => {
               ))}
             </Select>
           </FormControl>
+          <Box>
+            <Link to="/task/create" style={addTaskLinkStyle}>
+              Add Task
+            </Link>
+          </Box>
           <Stack direction="row" spacing={2}>
             {days.map((day, idx) => (
               <Button
                 variant="contained"
                 size="small"
-                color={day.value === dayFilter ? "success" : "secondary"}
+                style={{
+                  backgroundColor:
+                    day.value === dayFilter ? "#2a89b2" : "#184356",
+                  color: "white",
+                }}
                 key={`${idx}-${day.value}`}
                 onClick={() => {
                   setDayFilter(day.value);
@@ -67,8 +91,16 @@ const Home = () => {
             ))}
           </Stack>
         </Box>
+
         <Box display="flex" justifyContent="space-between">
-          <Button onClick={() => {setTypeFilter(''); setDayFilter('')}}>Clear filters</Button>
+          <Button
+            onClick={() => {
+              setTypeFilter("");
+              setDayFilter("");
+            }}
+          >
+            Clear filters
+          </Button>
         </Box>
         <Box mt="2rem">
           <Grid container spacing={2}>

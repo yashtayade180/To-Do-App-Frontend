@@ -1,18 +1,18 @@
 .form-container {
-  background-color: #fff;
+  background-color: #0a6280;
 }
 
 .form-title {
-  color: #00d5fa;
+  color: #0c9eb8;
 }
 
 .form-input {
   width: 100%;
   padding: 1rem;
   font-size: 16px;
-  border: 1px solid #ccc;
+  border: 1px solid #f5f5f5;
   border-radius: 5px;
-  background-color: #f0f0f0;
+  background-color: #e9f0f4;
   outline: none;
   transition: border-color 0.3s ease-in-out;
 }
@@ -33,8 +33,8 @@
   width: 100%;
   padding: 1rem;
   font-size: 16px;
-  color: #fff;
-  background-color: #00d5fa;
+  color: #163942;
+  background-color: #15c4df;
   border: none;
   border-radius: 5px;
   cursor: pointer;
