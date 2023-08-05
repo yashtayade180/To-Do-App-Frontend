@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import Dropzone from "react-dropzone";
-import axios from '../services/api'
+import axios from "../services/api";
 import { setLogin } from "../redux/UserSlice";
-
+import "./Login.css";
 const initialRegisterValues = {
   name: "",
   email: "",
@@ -46,28 +46,28 @@ const Login = () => {
   const navigate = useNavigate();
   const isNotMobile = useMediaQuery("(min-width:768px)");
 
-  const handleLogin = (values , onSubmitProps) => {
-   axios.post('/auth/login', values).then((res) => {
-    onSubmitProps.resetForm()
-    dispatch(setLogin(res.data.user))
-    navigate('/home')
-   })
-  }
+  const handleLogin = (values, onSubmitProps) => {
+    axios.post("/auth/login", values).then((res) => {
+      onSubmitProps.resetForm();
+      dispatch(setLogin(res.data.user));
+      navigate("/home");
+    });
+  };
 
-  const handleRegister = (values , onSubmitProps) => {
-    let formData = new FormData()
-    for(const property of Object.keys(values)) {
-        formData.append(property , values[property])
+  const handleRegister = (values, onSubmitProps) => {
+    let formData = new FormData();
+    for (const property of Object.keys(values)) {
+      formData.append(property, values[property]);
     }
-    axios.post('/auth/register' , formData).then((res) => {
-        onSubmitProps.resetForm()
-        setPage('login')
-    })
-  }
+    axios.post("/auth/register", formData).then((res) => {
+      onSubmitProps.resetForm();
+      setPage("login");
+    });
+  };
 
   const handleForm = (values, onSubmitProps) => {
-    if(isLogin) handleLogin(values, onSubmitProps)
-    if(isRegister) handleRegister(values, onSubmitProps)
+    if (isLogin) handleLogin(values, onSubmitProps);
+    if (isRegister) handleRegister(values, onSubmitProps);
   };
 
   return (
@@ -86,15 +86,21 @@ const Login = () => {
         resetForm,
         errors,
       }) => (
-        <Box p="2rem 0" m="2rem auto" width={isNotMobile ? "50%" : "90%"}>
-          <Typography textAlign="center" mb="2rem">
-            Welcome to Taskup
+        <Box
+          className="form-container"
+          p="2rem 0"
+          m="2rem auto"
+          width={isNotMobile ? "50%" : "90%"}
+        >
+          <Typography className="form-title" textAlign="center" mb="2rem">
+            Welcome to TO-DO-Application
           </Typography>
           <form onSubmit={handleSubmit}>
             <Box display="flex" flexDirection="column" gap="30px">
               {isRegister && (
                 <>
                   <TextField
+                    className="form-input"
                     label="Enter name"
                     name="name"
                     value={values.name}
@@ -116,6 +122,7 @@ const Login = () => {
                         p="1rem"
                         border="2px solid #000"
                         textAlign="center"
+                        className="dropzone-container"
                         sx={{
                           "&:hover": {
                             cursor: "pointer",
@@ -136,6 +143,7 @@ const Login = () => {
                 </>
               )}
               <TextField
+                className="form-input"
                 label="Enter email"
                 name="email"
                 value={values.email}
@@ -145,6 +153,7 @@ const Login = () => {
                 helperText={touched.email && errors.email}
               />
               <TextField
+                className="form-input"
                 label="Enter password"
                 name="password"
                 value={values.password}
@@ -153,7 +162,12 @@ const Login = () => {
                 error={Boolean(touched.password) && Boolean(errors.password)}
                 helperText={touched.password && errors.password}
               />
-              <Button type="submit" m="2rem 0" background="#00d5fa">
+              <Button
+                type="submit"
+                className="form-button"
+                m="2rem 0"
+                background="#00d5fa"
+              >
                 {isLogin ? "Login" : "Register"}
               </Button>
               <Typography
@@ -163,6 +177,7 @@ const Login = () => {
                 }}
                 variant="h6"
                 textAlign="center"
+                className="form-switch"
                 sx={{
                   "&:hover": {
                     cursor: "pointer",

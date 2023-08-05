@@ -36,7 +36,7 @@ const initialCreateSchema = Yup.object().shape({
 let initialValues = {
   name: "",
   type: "",
-  date: dayjs().format('YYYY-MM-DD'),
+  date: dayjs().format("YYYY-MM-DD"),
   time: dayjs(),
 };
 const TaskForm = ({ mode = "edit", task }) => {
@@ -48,11 +48,17 @@ const TaskForm = ({ mode = "edit", task }) => {
         navigate("/home");
       });
     } else {
-      values.time = values.time.format('HH:mm')
+      values.time = values.time.format("HH:mm");
       axiosInstance.post(`/task/create`, values).then((res) => {
         navigate("/home");
       });
     }
+  };
+  const handleDeleteTask = () => {
+    // Send a request to delete the task from the database using the task._id
+    axiosInstance.delete(`/task/${task._id}`).then((res) => {
+      navigate("/home");
+    });
   };
   const isNotMobile = useMediaQuery("(min-width: 768px)");
   const [date, setDate] = useState(null);
@@ -61,7 +67,9 @@ const TaskForm = ({ mode = "edit", task }) => {
     <Formik
       onSubmit={handleFormSubmit}
       initialValues={mode === "create" ? initialValues : task}
-      validationSchema={mode === "create" ? initialCreateSchema : initialEditSchema}
+      validationSchema={
+        mode === "create" ? initialCreateSchema : initialEditSchema
+      }
     >
       {({
         handleSubmit,
@@ -90,7 +98,9 @@ const TaskForm = ({ mode = "edit", task }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker
                   label="Date"
-                  value={mode ==="edit" ? dayjs(values.date || null) : values.date}
+                  value={
+                    mode === "edit" ? dayjs(values.date || null) : values.date
+                  }
                   minDate={mode === "edit" ? null : dayjs()}
                   onChange={(newValue) => {
                     values.date = newValue.format("YYYY-MM-DD");
@@ -107,7 +117,13 @@ const TaskForm = ({ mode = "edit", task }) => {
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <TimePicker
                   label="Time"
-                  value={mode ==="edit" ? dayjs(`${values.date.split("T")[0]}T${values.time}` || null) : values.time}
+                  value={
+                    mode === "edit"
+                      ? dayjs(
+                          `${values.date.split("T")[0]}T${values.time}` || null
+                        )
+                      : values.time
+                  }
                   onChange={(newValue) => {
                     values.time = newValue;
                     setTime(values.time);
@@ -159,8 +175,19 @@ const TaskForm = ({ mode = "edit", task }) => {
                 p="1rem 0"
                 background="#00D5FA"
               >
-                {mode === "edit" ? 'Edit Task' : 'Create Task' }
+                {mode === "edit" ? "Edit Task" : "Create Task"}
               </Button>
+              {mode === "edit" && (
+                <Button
+                  variant="outlined"
+                  onClick={handleDeleteTask}
+                  m="2rem 0"
+                  p="1rem 0"
+                  background="#FF0000" // Customize the button's background color
+                >
+                  Delete Task
+                </Button>
+              )}
             </Box>
           </form>
         </Box>
